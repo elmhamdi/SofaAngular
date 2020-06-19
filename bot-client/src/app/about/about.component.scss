@@ -1,0 +1,64 @@
+@mixin about-theme($theme) {
+  $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td, th {
+        border: none;
+        padding: 8px;
+    }
+
+    tr {
+        border-bottom: 1px solid mat-color($foreground, divider);
+        transition: background-color ease .3s;
+        line-height: 1.7rem;
+        color: mat-color($foreground, text);
+        font-weight: 400;
+    }
+
+    th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: transparent;
+        color: mat-color($foreground, text);
+        font-weight: 500;
+    }
+  }
+
+  table.table-detail {
+    td:first-child {
+        min-width: 10rem;
+        font-weight: 500;
+    }
+
+    tr {
+        line-height: 1.5rem;
+    }
+  }
+
+  .social-media-buttons {
+    margin-top: 1rem;
+
+    mat-icon {
+      line-height: 1.3rem;
+      padding-right: .2rem;
+    }
+
+    .mat-raised-button {
+      background-color: #1b95e0;
+      color: #ffffff;
+    }
+
+    .github-button {
+      margin-left: 1rem;
+      background-color: #757575;
+      color: #ffffff;
+    }
+  }
+}

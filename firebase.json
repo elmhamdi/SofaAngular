@@ -1,0 +1,34 @@
+{
+  "hosting": {
+    "public": "bot-client/dist",
+    "predeploy": [
+      "npm --prefix bot-client run lint",
+      "npm --prefix bot-client run build"
+    ],
+    "rewrites": [
+      {
+        "source": "/places",
+        "function": "app"
+      },
+      {
+        "source": "/geocode",
+        "function": "app"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix %RESOURCE_DIR% run lint",
+      "npm --prefix %RESOURCE_DIR% run build"
+    ]
+  }
+}

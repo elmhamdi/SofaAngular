@@ -1,0 +1,51 @@
+<div class="chat-window">
+  <div class="chat-message-list" #scrollMe>
+    <ul>
+      <li class="chat-message" [ngClass]="{'left': message.bot, 'right': !message.bot}" *ngFor="let message of chatMessages | async"
+        [@fadeIn]>
+        <div class="chat-message-image">
+          <i class="material-icons">{{message.bot ? 'help_outline' : 'face'}}</i>
+        </div>
+        <div class="chat-message-content">
+          <div class="chat-message-author">{{message.bot ? 'Chatbot' : 'أنا'}}</div>
+          <h3 *ngIf="message.title">{{message.title}}</h3>
+          <span>{{message.text}}</span>
+          <div *ngIf="message.textAsHtml" [innerHTML]="message.textAsHtml"></div>
+          <app-selection-list *ngIf="message.selectionList?.length > 0" [selectionList]="message.selectionList"></app-selection-list>
+          <app-locations-list *ngIf="message.locationsList?.length > 0" [locationsList]="message.locationsList"></app-locations-list>
+          <app-location-detail *ngIf="message.locationDetail" [location]="message.locationDetail"></app-location-detail>
+        </div>
+      </li>
+      <li class="chat-message left" [@fadeIn] *ngIf="isLoading | async">
+        <div class="chat-message-image">
+          <i class="material-icons">help_outline</i>
+        </div>
+        <div class="chat-message-content">
+          <div class="chat-message-author">Chatbot</div>
+          <div>
+            <app-loading-spinner></app-loading-spinner>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="bottom-bar">
+    <ul class="possibleAnswers">
+      <li *ngFor="let answer of (possibleAnswers | async)">
+        <button mat-button (click)="sendMessage(answer)">{{answer}}</button>
+      </li>
+      <li *ngIf="isLoadingPossibleAnswers | async">
+        <app-loading-spinner></app-loading-spinner>
+      </li>
+    </ul>
+    <mat-form-field floatLabel="never" color="accent">
+      <textarea matInput #chatInput (keyup.enter)="chatInputController(chatInput)" placeholder="Frag mich etwas..." matTextareaAutosize
+        matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+    </mat-form-field>
+    <div class="message-send-button">
+      <button mat-fab (click)="chatInputController(chatInput)">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
